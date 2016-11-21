@@ -10,7 +10,7 @@ import requests
 import re
 from datetime import datetime
 
-def wudata(station, start_date=None, end_date=None, clean=true):
+def wudata(station, start_date=None, end_date=None, clean=True):
     URL_TPL = (
         'https://www.wunderground.com/'
         'history/'
