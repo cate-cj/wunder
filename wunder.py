@@ -10,7 +10,7 @@ import requests
 import re
 from datetime import datetime
 
-def wudata(station, start_date=None, end_date=None):
+def wudata(station, start_date=None, end_date=None, clean=true):
     URL_TPL = (
         'https://www.wunderground.com/'
         'history/'
@@ -49,9 +49,10 @@ def wudata(station, start_date=None, end_date=None):
     if r.ok:
         data = r.text
 
-        # cleanup: remove unnecessary <br/> tags, and leading blank line
-        data = re.sub('\<br /\>', '', data)
-        data = re.sub('^\n', '', data)
+        if clean:
+            # cleanup: remove unnecessary <br/> tags, and leading blank line
+            data = re.sub('\<br /\>', '', data)
+            data = re.sub('^\n', '', data)
 
     else:
         print('Error retrieving data. Returned {}'.format(r.status_code))
@@ -63,6 +64,7 @@ parser.add_argument('station', type=str, help='weather station code')
 parser.add_argument('-s', '--start-date', type=str, help='start date')
 parser.add_argument('-e', '--end-date', type=str, help='end date')
 parser.add_argument('-y', '--year', type=str, help='data year')
+parser.add_argument('-r', '--raw', dest='clean', action='store_false')
 
 if __name__ == '__main__':
     args = parser.parse_args()
@@ -74,6 +76,8 @@ if __name__ == '__main__':
         # collect a full years worth of data
         start_date = '{}-01-01'.format(args.year)
         end_date = '{}-12-31'.format(args.year)
+    
+    clean = args.clean
 
-    print(wudata(args.station, start_date, end_date))
+    print(wudata(args.station, start_date, end_date, clean))
 
