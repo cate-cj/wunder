@@ -5,25 +5,25 @@ and wrote a script to collect data for analysis from
 
 ## Usage
 ```bash
-# today's data for station KYMF (San Diego)
-$ python wunder.py kymf
+# today's data for station KMYF (San Diego)
+$ python wunder.py kmyf
 
 # specific date range (only 12 months max allowed by service)
-$ python wunder.py -s 2016-01-01 -e 2016-02-01 kymf
+$ python wunder.py -s 2016-01-01 -e 2016-02-01 kmyf
 
 # All 2016 data
-$ python wunder.py -y 2016 kymf
+$ python wunder.py -y 2016 kmyf
 ```
 
 ```bash
 #!/usr/bin/env bash
 
 # Collect multiple years
-mkdir kymf
+mkdir kmyf
 for i in {1996..2016}; 
 do 
   echo $i
-  python wunder.py -y $i kymf > kymf/${i}.csv
+  python wunder.py -y $i kmyf > kmyf/${i}.csv
 done
 ```
 
